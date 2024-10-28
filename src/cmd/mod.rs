@@ -11,29 +11,16 @@ struct CmdArgs {
 
 #[derive(Subcommand)]
 enum Commands {
-    Copy {
-        #[arg(long = "source", short, required = true, help = "The source file")]
-        src: String,
-        #[arg(
-            long = "destination",
-            short,
-            required = true,
-            help = "The destination file"
-        )]
-        dst: String,
-    },
-    Paste {
-        #[arg(long, short, required = true, help = "What to copy")]
-        what: String,
-    },
+    Copy(cmd_copy::Args),
+    Paste(cmd_paste::Args),
 }
 
 pub fn parse_and_run() {
     let args = CmdArgs::parse();
 
     match &args.command {
-        Some(Commands::Copy { src, dst }) => cmd_copy::run(src, dst),
-        Some(Commands::Paste { what }) => cmd_paste::run(what),
+        Some(Commands::Copy(args)) => cmd_copy::run(&args),
+        Some(Commands::Paste(args)) => cmd_paste::run(&args),
         None => {
             println!("No subcommand given");
         }
