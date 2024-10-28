@@ -1,7 +1,10 @@
+mod cmd_copy;
+mod cmd_paste;
+
 use clap::{Parser, Subcommand};
 
 #[derive(Parser)]
-struct CliArgs {
+struct CmdArgs {
     #[command(subcommand)]
     command: Option<Commands>,
 }
@@ -26,15 +29,11 @@ enum Commands {
 }
 
 pub fn parse_and_run() {
-    let args = CliArgs::parse();
+    let args = CmdArgs::parse();
 
     match &args.command {
-        Some(Commands::Copy { src, dst }) => {
-            println!("You chose to copy {src} to {dst}");
-        }
-        Some(Commands::Paste { what }) => {
-            println!("You chose to paste {what}");
-        }
+        Some(Commands::Copy { src, dst }) => cmd_copy::run(src, dst),
+        Some(Commands::Paste { what }) => cmd_paste::run(what),
         None => {
             println!("No subcommand given");
         }

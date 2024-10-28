@@ -1,4 +1,5 @@
-mod cliargs;
+mod cmd;
+
 fn main() {
-    cliargs::parse_and_run();
+    cmd::parse_and_run();
 }
