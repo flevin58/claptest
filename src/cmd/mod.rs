@@ -1,5 +1,5 @@
-mod cmd_copy;
-mod cmd_paste;
+mod cmd_one;
+mod cmd_two;
 
 use clap::{Parser, Subcommand};
 
@@ -11,16 +11,18 @@ struct CmdArgs {
 
 #[derive(Subcommand)]
 enum Commands {
-    Copy(cmd_copy::Args),
-    Paste(cmd_paste::Args),
+    #[command(about = "Command one descritption")]
+    One(cmd_one::Args),
+    #[command(about = "Command two descritption")]
+    Two(cmd_two::Args),
 }
 
 pub fn parse_and_run() {
     let args = CmdArgs::parse();
 
     match &args.command {
-        Some(Commands::Copy(args)) => cmd_copy::run(&args),
-        Some(Commands::Paste(args)) => cmd_paste::run(&args),
+        Some(Commands::One(args)) => cmd_one::run(&args),
+        Some(Commands::Two(args)) => cmd_two::run(&args),
         None => {
             println!("No subcommand given");
         }

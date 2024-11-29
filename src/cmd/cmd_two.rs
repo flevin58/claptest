@@ -5,7 +5,7 @@ pub struct Args {
     #[arg(
         required = true,
         long, short,
-        help = "What to copy",
+        help = "Your selections",
         default_value_t = String::from("window"),
         value_parser = clap::builder::PossibleValuesParser::new(["window", "selection", "screen"]),
     )]
@@ -13,5 +13,5 @@ pub struct Args {
 }
 
 pub fn run(args: &Args) {
-    println!("You chose to paste '{}'", args.what);
+    println!("Command two choice is '{}'", args.what);
 }
